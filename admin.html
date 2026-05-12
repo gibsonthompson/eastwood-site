@@ -1,0 +1,690 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin | Eastwood PHC</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=Open+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: 'Open Sans', sans-serif;
+      color: #222;
+      background: #f3f3f1;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    h1, h2, h3, h4 {
+      font-family: 'Oswald', sans-serif;
+      font-weight: 700;
+      line-height: 1.2;
+    }
+
+    /* TOP BAR */
+    .topbar {
+      background: #000;
+      padding: 12px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .topbar-brand {
+      color: #c8872a;
+      font-family: 'Oswald', sans-serif;
+      font-size: 18px;
+      font-weight: 700;
+    }
+
+    .topbar-links {
+      display: flex;
+      gap: 16px;
+    }
+
+    .topbar-links a {
+      color: rgba(255,255,255,0.7);
+      font-size: 13px;
+      text-decoration: none;
+      font-weight: 600;
+    }
+
+    .topbar-links a:hover { color: #fff; }
+    .topbar-links a.active { color: #c8872a; }
+
+    /* TABS */
+    .tabs {
+      background: #fff;
+      border-bottom: 1px solid #e0e0e0;
+      display: flex;
+      overflow-x: auto;
+      padding: 0 16px;
+    }
+
+    .tab {
+      padding: 14px 20px;
+      font-family: 'Oswald', sans-serif;
+      font-size: 15px;
+      font-weight: 600;
+      color: #888;
+      cursor: pointer;
+      border-bottom: 3px solid transparent;
+      white-space: nowrap;
+    }
+
+    .tab.active {
+      color: #c8872a;
+      border-bottom-color: #c8872a;
+    }
+
+    /* STATS ROW */
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 12px;
+      padding: 16px;
+      max-width: 900px;
+    }
+
+    .stat {
+      background: #fff;
+      padding: 16px;
+      text-align: center;
+    }
+
+    .stat-num {
+      font-family: 'Oswald', sans-serif;
+      font-size: 28px;
+      font-weight: 700;
+      color: #222;
+    }
+
+    .stat-label {
+      font-size: 12px;
+      color: #888;
+      margin-top: 4px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    /* CONTENT */
+    .content {
+      padding: 16px;
+      max-width: 900px;
+    }
+
+    .content-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 12px;
+    }
+
+    .content-header h2 {
+      font-size: 22px;
+    }
+
+    .filter-row {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 12px;
+      flex-wrap: wrap;
+    }
+
+    .filter-btn {
+      padding: 6px 14px;
+      font-size: 13px;
+      font-weight: 600;
+      background: #fff;
+      border: 1px solid #ddd;
+      cursor: pointer;
+      color: #555;
+    }
+
+    .filter-btn.active {
+      background: #c8872a;
+      color: #fff;
+      border-color: #c8872a;
+    }
+
+    /* JOB CARDS */
+    .job-list {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .job-card {
+      background: #fff;
+      padding: 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .job-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .job-name {
+      font-weight: 700;
+      font-size: 15px;
+    }
+
+    .job-status {
+      font-size: 12px;
+      font-weight: 700;
+      padding: 3px 10px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .status-new { background: #e3f2fd; color: #1565c0; }
+    .status-confirmed { background: #e8f5e9; color: #2e7d32; }
+    .status-scheduled { background: #fff3e0; color: #e65100; }
+    .status-completed { background: #f1f1f1; color: #555; }
+    .status-cancelled { background: #fce4ec; color: #c62828; }
+
+    .job-detail {
+      font-size: 13px;
+      color: #666;
+      line-height: 1.5;
+    }
+
+    .job-detail strong { color: #333; }
+
+    .job-actions {
+      display: flex;
+      gap: 8px;
+      margin-top: 4px;
+    }
+
+    .job-actions button {
+      padding: 6px 14px;
+      font-size: 12px;
+      font-weight: 600;
+      border: 1px solid #ddd;
+      background: #fff;
+      cursor: pointer;
+      font-family: 'Open Sans', sans-serif;
+    }
+
+    .job-actions button:hover { background: #f5f5f5; }
+
+    .job-actions .btn-confirm {
+      background: #2e7d32;
+      color: #fff;
+      border-color: #2e7d32;
+    }
+
+    .job-actions .btn-complete {
+      background: #c8872a;
+      color: #fff;
+      border-color: #c8872a;
+    }
+
+    /* CALENDAR VIEW */
+    .calendar-grid {
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+      gap: 1px;
+      background: #ddd;
+    }
+
+    .cal-header {
+      background: #000;
+      color: #fff;
+      font-family: 'Oswald', sans-serif;
+      font-size: 13px;
+      font-weight: 600;
+      text-align: center;
+      padding: 10px 4px;
+    }
+
+    .cal-day {
+      background: #fff;
+      min-height: 80px;
+      padding: 6px;
+      font-size: 12px;
+    }
+
+    .cal-day .day-num {
+      font-weight: 700;
+      color: #333;
+      margin-bottom: 4px;
+    }
+
+    .cal-day.today { background: #fffde7; }
+    .cal-day.empty { background: #f9f9f9; }
+
+    .cal-event {
+      background: #c8872a;
+      color: #fff;
+      font-size: 10px;
+      padding: 2px 4px;
+      margin-bottom: 2px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    /* DETAIL PANEL */
+    .panel {
+      display: none;
+      position: fixed;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      width: 100%;
+      max-width: 400px;
+      background: #fff;
+      z-index: 200;
+      overflow-y: auto;
+      box-shadow: -4px 0 20px rgba(0,0,0,0.15);
+    }
+
+    .panel.open { display: block; }
+
+    .panel-header {
+      background: #000;
+      color: #fff;
+      padding: 16px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .panel-header h3 {
+      font-size: 18px;
+      color: #c8872a;
+    }
+
+    .panel-close {
+      background: none;
+      border: none;
+      color: #fff;
+      font-size: 24px;
+      cursor: pointer;
+    }
+
+    .panel-body {
+      padding: 20px;
+    }
+
+    .panel-body .field {
+      margin-bottom: 16px;
+    }
+
+    .panel-body .field label {
+      display: block;
+      font-size: 12px;
+      font-weight: 600;
+      color: #888;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: 4px;
+    }
+
+    .panel-body .field .val {
+      font-size: 15px;
+      color: #222;
+    }
+
+    .panel-body select,
+    .panel-body textarea,
+    .panel-body input {
+      width: 100%;
+      padding: 8px 10px;
+      font-size: 14px;
+      font-family: 'Open Sans', sans-serif;
+      border: 1px solid #ccc;
+    }
+
+    .panel-body textarea { height: 80px; resize: vertical; }
+
+    .panel-actions {
+      display: flex;
+      gap: 8px;
+      padding: 16px 20px;
+      border-top: 1px solid #eee;
+    }
+
+    .panel-actions button {
+      flex: 1;
+      padding: 10px;
+      font-family: 'Oswald', sans-serif;
+      font-size: 15px;
+      font-weight: 600;
+      cursor: pointer;
+      border: none;
+    }
+
+    .btn-save {
+      background: #c8872a;
+      color: #fff;
+    }
+
+    .btn-cancel {
+      background: #eee;
+      color: #555;
+    }
+
+    /* OVERLAY */
+    .overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.3);
+      z-index: 199;
+    }
+
+    .overlay.open { display: block; }
+
+    @media (max-width: 600px) {
+      .stats { grid-template-columns: repeat(2, 1fr); }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- TOP BAR -->
+  <div class="topbar">
+    <div class="topbar-brand">Eastwood PHC — Admin</div>
+    <div class="topbar-links">
+      <a href="index.html">View Site</a>
+    </div>
+  </div>
+
+  <!-- TABS -->
+  <div class="tabs">
+    <div class="tab active" data-tab="bookings">Bookings</div>
+    <div class="tab" data-tab="calendar">Calendar</div>
+  </div>
+
+  <!-- STATS -->
+  <div class="stats" id="statsRow">
+    <div class="stat">
+      <div class="stat-num" id="statNew">3</div>
+      <div class="stat-label">New</div>
+    </div>
+    <div class="stat">
+      <div class="stat-num" id="statConfirmed">2</div>
+      <div class="stat-label">Confirmed</div>
+    </div>
+    <div class="stat">
+      <div class="stat-num" id="statScheduled">4</div>
+      <div class="stat-label">Scheduled</div>
+    </div>
+    <div class="stat">
+      <div class="stat-num" id="statCompleted">12</div>
+      <div class="stat-label">Completed</div>
+    </div>
+  </div>
+
+  <!-- BOOKINGS TAB -->
+  <div class="content" id="bookingsTab">
+    <div class="content-header">
+      <h2>Bookings</h2>
+    </div>
+
+    <div class="filter-row">
+      <button class="filter-btn active" data-filter="all">All</button>
+      <button class="filter-btn" data-filter="new">New</button>
+      <button class="filter-btn" data-filter="confirmed">Confirmed</button>
+      <button class="filter-btn" data-filter="scheduled">Scheduled</button>
+      <button class="filter-btn" data-filter="completed">Completed</button>
+      <button class="filter-btn" data-filter="cancelled">Cancelled</button>
+    </div>
+
+    <div class="job-list" id="jobList">
+      <!-- Populated by JS — sample data below for layout reference -->
+    </div>
+  </div>
+
+  <!-- CALENDAR TAB -->
+  <div class="content" id="calendarTab" style="display:none;">
+    <div class="content-header">
+      <h2 id="calMonth">May 2026</h2>
+    </div>
+    <div class="calendar-grid" id="calGrid">
+      <!-- Populated by JS -->
+    </div>
+  </div>
+
+  <!-- DETAIL PANEL -->
+  <div class="overlay" id="overlay"></div>
+  <div class="panel" id="panel">
+    <div class="panel-header">
+      <h3>Booking Details</h3>
+      <button class="panel-close" id="panelClose">&times;</button>
+    </div>
+    <div class="panel-body" id="panelBody">
+      <!-- Filled by JS -->
+    </div>
+    <div class="panel-actions">
+      <button class="btn-cancel" id="panelCancelBtn">Close</button>
+      <button class="btn-save" id="panelSaveBtn">Save Changes</button>
+    </div>
+  </div>
+
+  <script>
+    // =========================================================
+    // SAMPLE DATA — replace with Supabase fetch
+    // Table: bookings
+    // Columns: id, first_name, last_name, phone, email, address,
+    //          service, urgency, preferred_date, preferred_time,
+    //          details, status, notes, created_at
+    // =========================================================
+    var bookings = [
+      { id: 1, first_name: 'Mike', last_name: 'Sullivan', phone: '978-555-1234', email: 'mike@email.com', address: '45 Pleasant St, Gardner', service: 'water-heater', urgency: 'asap', preferred_date: '2026-05-13', preferred_time: 'morning', details: 'No hot water since last night. Tank is about 12 years old.', status: 'new', notes: '', created_at: '2026-05-12T08:30:00Z' },
+      { id: 2, first_name: 'Karen', last_name: 'Walsh', phone: '978-555-5678', email: 'karen.w@email.com', address: '112 Oak Hill Rd, Westminster', service: 'boiler-furnace', urgency: 'soon', preferred_date: '2026-05-15', preferred_time: 'afternoon', details: 'Furnace making loud banging noise when it kicks on.', status: 'new', notes: '', created_at: '2026-05-12T09:15:00Z' },
+      { id: 3, first_name: 'Tom', last_name: 'Rivera', phone: '978-555-9012', email: '', address: '8 Elm St, Fitchburg', service: 'drain-cleaning', urgency: 'asap', preferred_date: '2026-05-12', preferred_time: 'morning', details: 'Kitchen sink completely backed up. Tried plunger, no luck.', status: 'confirmed', notes: 'Heading out at 11am', created_at: '2026-05-11T16:00:00Z' },
+      { id: 4, first_name: 'Lisa', last_name: 'Chen', phone: '978-555-3456', email: 'lisa.chen@email.com', address: '200 Central St, Gardner', service: 'mini-split-hvac', urgency: 'estimate', preferred_date: '2026-05-18', preferred_time: '', details: 'Looking at adding mini splits to second floor. 3 bedrooms.', status: 'confirmed', notes: 'Estimate scheduled for Monday', created_at: '2026-05-10T11:00:00Z' },
+      { id: 5, first_name: 'Jim', last_name: 'Petrov', phone: '978-555-7890', email: 'jim.p@email.com', address: '67 Prospect St, Gardner', service: 'oil-to-gas', urgency: 'flexible', preferred_date: '2026-05-20', preferred_time: 'morning', details: 'Want to convert from oil to gas before next winter.', status: 'scheduled', notes: 'Site assessment completed. Gas available. Quote sent $9,800.', created_at: '2026-05-08T14:00:00Z' },
+      { id: 6, first_name: 'Sarah', last_name: 'McBride', phone: '978-555-2345', email: 'sarah.m@email.com', address: '33 Lake St, Ashburnham', service: 'kitchen-bath', urgency: 'flexible', preferred_date: '2026-05-22', preferred_time: 'afternoon', details: 'Full bathroom remodel. Tub to walk-in shower conversion.', status: 'scheduled', notes: 'Coordinating with her GC. Tile goes in week of 5/25.', created_at: '2026-05-07T09:30:00Z' },
+      { id: 7, first_name: 'Dan', last_name: 'Nguyen', phone: '978-555-6789', email: '', address: '90 Parker St, Gardner', service: 'water-heater', urgency: 'asap', preferred_date: '2026-05-10', preferred_time: 'morning', details: 'Tank leaking. Need replacement.', status: 'completed', notes: 'Installed 50gal Bradford White. Hauled old tank.', created_at: '2026-05-09T07:00:00Z' },
+      { id: 8, first_name: 'Jen', last_name: 'Kowalski', phone: '978-555-0123', email: 'jen.k@email.com', address: '15 Chestnut St, Templeton', service: 'drain-cleaning', urgency: 'soon', preferred_date: '2026-05-11', preferred_time: 'afternoon', details: 'Shower drain very slow.', status: 'completed', notes: 'Hair clog. Cleared with snake. 15 min job.', created_at: '2026-05-10T13:00:00Z' },
+      { id: 9, first_name: 'Paul', last_name: 'Dubois', phone: '978-555-4567', email: 'paul.d@email.com', address: '220 Main St, Winchendon', service: 'general-plumbing', urgency: 'new', preferred_date: '2026-05-14', preferred_time: 'morning', details: 'Outdoor spigot leaking. Might need replacement.', status: 'new', notes: '', created_at: '2026-05-12T10:45:00Z' },
+    ];
+
+    var serviceLabels = {
+      'water-heater': 'Water Heater',
+      'boiler-furnace': 'Boiler / Furnace',
+      'mini-split-hvac': 'Mini Split / HVAC',
+      'drain-cleaning': 'Drain Cleaning',
+      'oil-to-gas': 'Oil to Gas',
+      'kitchen-bath': 'Kitchen & Bath',
+      'general-plumbing': 'General Plumbing',
+      'other': 'Other'
+    };
+
+    var urgencyLabels = {
+      'asap': 'Emergency',
+      'soon': 'Within days',
+      'flexible': 'Flexible',
+      'estimate': 'Estimate only'
+    };
+
+    // =========================================================
+    // RENDER
+    // =========================================================
+    var currentFilter = 'all';
+    var currentTab = 'bookings';
+
+    function renderStats() {
+      document.getElementById('statNew').textContent = bookings.filter(function(b) { return b.status === 'new'; }).length;
+      document.getElementById('statConfirmed').textContent = bookings.filter(function(b) { return b.status === 'confirmed'; }).length;
+      document.getElementById('statScheduled').textContent = bookings.filter(function(b) { return b.status === 'scheduled'; }).length;
+      document.getElementById('statCompleted').textContent = bookings.filter(function(b) { return b.status === 'completed'; }).length;
+    }
+
+    function renderJobs() {
+      var list = document.getElementById('jobList');
+      var filtered = currentFilter === 'all' ? bookings : bookings.filter(function(b) { return b.status === currentFilter; });
+
+      // Sort: new first, then by date
+      filtered.sort(function(a, b) {
+        var order = { new: 0, confirmed: 1, scheduled: 2, completed: 3, cancelled: 4 };
+        if (order[a.status] !== order[b.status]) return order[a.status] - order[b.status];
+        return new Date(b.created_at) - new Date(a.created_at);
+      });
+
+      list.innerHTML = filtered.map(function(b) {
+        var dateStr = b.preferred_date ? new Date(b.preferred_date + 'T12:00:00').toLocaleDateString('en-US', { weekday: 'short', month: 'short', day: 'numeric' }) : 'No date';
+        var timeStr = b.preferred_time ? (b.preferred_time.charAt(0).toUpperCase() + b.preferred_time.slice(1)) : '';
+
+        return '<div class="job-card" data-id="' + b.id + '" onclick="openPanel(' + b.id + ')">' +
+          '<div class="job-top">' +
+            '<div class="job-name">' + b.first_name + ' ' + b.last_name + '</div>' +
+            '<div class="job-status status-' + b.status + '">' + b.status + '</div>' +
+          '</div>' +
+          '<div class="job-detail">' +
+            '<strong>' + (serviceLabels[b.service] || b.service) + '</strong> · ' + dateStr + (timeStr ? ' · ' + timeStr : '') + '<br>' +
+            b.address + (b.phone ? ' · ' + b.phone : '') +
+          '</div>' +
+          (b.details ? '<div class="job-detail" style="font-style:italic;">"' + b.details.substring(0, 80) + (b.details.length > 80 ? '...' : '') + '"</div>' : '') +
+        '</div>';
+      }).join('');
+    }
+
+    function renderCalendar() {
+      var grid = document.getElementById('calGrid');
+      var now = new Date();
+      var year = now.getFullYear();
+      var month = now.getMonth();
+      var firstDay = new Date(year, month, 1).getDay();
+      var daysInMonth = new Date(year, month + 1, 0).getDate();
+      var today = now.getDate();
+
+      document.getElementById('calMonth').textContent = now.toLocaleDateString('en-US', { month: 'long', year: 'numeric' });
+
+      var html = '';
+      ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'].forEach(function(d) {
+        html += '<div class="cal-header">' + d + '</div>';
+      });
+
+      for (var i = 0; i < firstDay; i++) {
+        html += '<div class="cal-day empty"></div>';
+      }
+
+      for (var d = 1; d <= daysInMonth; d++) {
+        var dateStr = year + '-' + String(month + 1).padStart(2, '0') + '-' + String(d).padStart(2, '0');
+        var dayBookings = bookings.filter(function(b) { return b.preferred_date === dateStr && b.status !== 'completed' && b.status !== 'cancelled'; });
+        var isToday = d === today ? ' today' : '';
+
+        html += '<div class="cal-day' + isToday + '">';
+        html += '<div class="day-num">' + d + '</div>';
+        dayBookings.forEach(function(b) {
+          html += '<div class="cal-event" onclick="openPanel(' + b.id + ')">' + b.last_name + ' - ' + (serviceLabels[b.service] || b.service).substring(0, 12) + '</div>';
+        });
+        html += '</div>';
+      }
+
+      grid.innerHTML = html;
+    }
+
+    // =========================================================
+    // PANEL
+    // =========================================================
+    var currentBookingId = null;
+
+    function openPanel(id) {
+      var b = bookings.find(function(x) { return x.id === id; });
+      if (!b) return;
+      currentBookingId = id;
+
+      var body = document.getElementById('panelBody');
+      body.innerHTML =
+        '<div class="field"><label>Customer</label><div class="val">' + b.first_name + ' ' + b.last_name + '</div></div>' +
+        '<div class="field"><label>Phone</label><div class="val"><a href="tel:' + b.phone.replace(/[^0-9]/g, '') + '">' + b.phone + '</a></div></div>' +
+        '<div class="field"><label>Email</label><div class="val">' + (b.email || '—') + '</div></div>' +
+        '<div class="field"><label>Address</label><div class="val">' + b.address + '</div></div>' +
+        '<div class="field"><label>Service</label><div class="val">' + (serviceLabels[b.service] || b.service) + '</div></div>' +
+        '<div class="field"><label>Urgency</label><div class="val">' + (urgencyLabels[b.urgency] || b.urgency) + '</div></div>' +
+        '<div class="field"><label>Preferred Date</label><div class="val">' + (b.preferred_date || '—') + '</div></div>' +
+        '<div class="field"><label>Preferred Time</label><div class="val">' + (b.preferred_time || 'No preference') + '</div></div>' +
+        '<div class="field"><label>Details</label><div class="val">' + (b.details || '—') + '</div></div>' +
+        '<div class="field"><label>Status</label><select id="panelStatus">' +
+          '<option value="new"' + (b.status === 'new' ? ' selected' : '') + '>New</option>' +
+          '<option value="confirmed"' + (b.status === 'confirmed' ? ' selected' : '') + '>Confirmed</option>' +
+          '<option value="scheduled"' + (b.status === 'scheduled' ? ' selected' : '') + '>Scheduled</option>' +
+          '<option value="completed"' + (b.status === 'completed' ? ' selected' : '') + '>Completed</option>' +
+          '<option value="cancelled"' + (b.status === 'cancelled' ? ' selected' : '') + '>Cancelled</option>' +
+        '</select></div>' +
+        '<div class="field"><label>Internal Notes</label><textarea id="panelNotes">' + (b.notes || '') + '</textarea></div>';
+
+      document.getElementById('panel').classList.add('open');
+      document.getElementById('overlay').classList.add('open');
+    }
+
+    function closePanel() {
+      document.getElementById('panel').classList.remove('open');
+      document.getElementById('overlay').classList.remove('open');
+      currentBookingId = null;
+    }
+
+    document.getElementById('panelClose').addEventListener('click', closePanel);
+    document.getElementById('panelCancelBtn').addEventListener('click', closePanel);
+    document.getElementById('overlay').addEventListener('click', closePanel);
+
+    document.getElementById('panelSaveBtn').addEventListener('click', function() {
+      if (!currentBookingId) return;
+      var b = bookings.find(function(x) { return x.id === currentBookingId; });
+      if (!b) return;
+
+      b.status = document.getElementById('panelStatus').value;
+      b.notes = document.getElementById('panelNotes').value;
+
+      // TODO: UPDATE Supabase
+      // await supabase.from('bookings').update({ status: b.status, notes: b.notes }).eq('id', b.id);
+
+      console.log('Updated booking', b.id, ':', b.status, b.notes);
+      closePanel();
+      renderStats();
+      renderJobs();
+      renderCalendar();
+    });
+
+    // =========================================================
+    // TABS
+    // =========================================================
+    document.querySelectorAll('.tab').forEach(function(tab) {
+      tab.addEventListener('click', function() {
+        document.querySelectorAll('.tab').forEach(function(t) { t.classList.remove('active'); });
+        tab.classList.add('active');
+        currentTab = tab.dataset.tab;
+
+        document.getElementById('bookingsTab').style.display = currentTab === 'bookings' ? 'block' : 'none';
+        document.getElementById('calendarTab').style.display = currentTab === 'calendar' ? 'block' : 'none';
+
+        if (currentTab === 'calendar') renderCalendar();
+      });
+    });
+
+    // =========================================================
+    // FILTERS
+    // =========================================================
+    document.querySelectorAll('.filter-btn').forEach(function(btn) {
+      btn.addEventListener('click', function() {
+        document.querySelectorAll('.filter-btn').forEach(function(b) { b.classList.remove('active'); });
+        btn.classList.add('active');
+        currentFilter = btn.dataset.filter;
+        renderJobs();
+      });
+    });
+
+    // =========================================================
+    // INIT
+    // =========================================================
+    renderStats();
+    renderJobs();
+  </script>
+</body>
+</html>
