@@ -40,7 +40,7 @@ img { max-width: 100%; display: block; }
   font-family: 'Oswald', sans-serif;
   font-weight: 700;
   font-size: 14px;
-  border: 2px solid #da8f1d;
+  border: 2px solid #db7a2e;
   border-radius: 4px;
 }
 
@@ -132,20 +132,20 @@ img { max-width: 100%; display: block; }
 /* BUTTONS */
 .btn-gold {
   display: inline-block;
-  background: #da8f1d;
+  background: #db7a2e;
   color: #fff;
   font-family: 'Oswald', sans-serif;
   font-size: 17px;
   font-weight: 600;
   padding: 14px 44px;
-  border: 2px solid #da8f1d;
+  border: 2px solid #db7a2e;
 }
 
 .btn-gold-outline {
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  background: #da8f1d;
+  background: #db7a2e;
   color: #fff;
   font-family: 'Oswald', sans-serif;
   font-size: 17px;
@@ -183,7 +183,7 @@ img { max-width: 100%; display: block; }
 .cred-icon {
   width: 22px;
   height: 22px;
-  background: #da8f1d;
+  background: #db7a2e;
   border-radius: 50%;
   display: flex;
   align-items: center;
@@ -226,7 +226,7 @@ img { max-width: 100%; display: block; }
 .cta-content { position: relative; z-index: 1; }
 
 .cta .eyebrow {
-  color: #da8f1d;
+  color: #db7a2e;
   font-family: 'Oswald', sans-serif;
   font-size: 15px;
   letter-spacing: 2px;
@@ -252,7 +252,7 @@ img { max-width: 100%; display: block; }
 .svc { background: #fff; padding: 28px 20px; text-align: center; }
 .svc h3 { font-size: 22px; margin-bottom: 8px; }
 .svc h3 a { color: #222; }
-.svc h3 a:hover { color: #da8f1d; }
+.svc h3 a:hover { color: #db7a2e; }
 .svc p { font-size: 14px; color: #555; line-height: 1.7; }
 
 /* GALLERY */
@@ -320,7 +320,7 @@ img { max-width: 100%; display: block; }
   width: 40px;
   height: 40px;
   border-radius: 50%;
-  background: #da8f1d;
+  background: #db7a2e;
   color: #fff;
   display: flex;
   align-items: center;
@@ -379,7 +379,7 @@ img { max-width: 100%; display: block; }
   color: #222;
 }
 
-.other-services-list a:hover { color: #da8f1d; }
+.other-services-list a:hover { color: #db7a2e; }
 
 /* FOOTER */
 .footer {
@@ -401,7 +401,7 @@ img { max-width: 100%; display: block; }
   font-family: 'Oswald', sans-serif;
   font-size: 24px;
   font-weight: 700;
-  color: #da8f1d;
+  color: #db7a2e;
   margin-bottom: 8px;
 }
 
@@ -414,7 +414,7 @@ img { max-width: 100%; display: block; }
 .footer-col h4 {
   font-family: 'Oswald', sans-serif;
   font-size: 16px;
-  color: #da8f1d;
+  color: #db7a2e;
   text-transform: uppercase;
   letter-spacing: 1px;
   margin-bottom: 12px;
@@ -427,7 +427,7 @@ img { max-width: 100%; display: block; }
   color: rgba(255,255,255,0.7);
 }
 
-.footer-col a:hover { color: #da8f1d; }
+.footer-col a:hover { color: #db7a2e; }
 
 .footer-phone {
   display: inline-flex;
@@ -436,7 +436,7 @@ img { max-width: 100%; display: block; }
   font-family: 'Oswald', sans-serif;
   font-size: 22px;
   font-weight: 600;
-  color: #da8f1d;
+  color: #db7a2e;
   margin-top: 8px;
 }
 
